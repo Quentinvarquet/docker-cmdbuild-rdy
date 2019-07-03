@@ -173,5 +173,12 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
 
+RUN set -x \
+&& mkdir -p /tmp/database \
+&& cd /tmp/database \ 
+&& wget https://github.com/Quentinvarquet/docker-cmdbuild-rdy/blob/master/files/empty-database.sql \ 
+&& psql -c "create database cmdbuild" \
+&& psql -U postgres -d myDataBase -a -f /tmp/database/empty-database.sql
+
 EXPOSE 5432
 CMD ["postgres"]
