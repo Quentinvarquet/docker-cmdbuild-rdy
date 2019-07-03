@@ -1,6 +1,10 @@
 # vim:set ft=dockerfile:
 FROM debian:stretch-slim
 
+RUN mkdir ~/.gnupg
+RUN echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
+
+
 RUN set -ex; \
 	if ! command -v gpg > /dev/null; then \
 		apt-get update; \
